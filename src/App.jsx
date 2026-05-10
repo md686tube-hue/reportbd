@@ -3,7 +3,7 @@ import "./App.css";
 import { generateDocx } from "./docxGenerator";
 import { NIKOSH_B64 } from "./nikoshFont";
 
-// Nikosh font dynamically inject — CSS এ না রেখে JS এ রাখলে print এও কাজ করে
+// Nikosh font inject — শুধু doc-preview এ apply হবে
 (function() {
   const style = document.createElement('style');
   style.textContent = `@font-face {
@@ -13,7 +13,8 @@ import { NIKOSH_B64 } from "./nikoshFont";
   font-style: normal;
   font-display: block;
 }
-* { font-family: 'Nikosh', 'Hind Siliguri', sans-serif !important; }`;
+.doc-preview, .doc-preview * { font-family: 'Nikosh', 'Hind Siliguri', sans-serif !important; }
+@media print { * { font-family: 'Nikosh', 'Hind Siliguri', sans-serif !important; } }`;
   document.head.appendChild(style);
 })();
 
