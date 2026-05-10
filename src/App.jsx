@@ -358,7 +358,24 @@ export default function App() {
         <div className="preview-view">
           <div className="preview-actions">
             <button className="btn-secondary" onClick={() => setView("entry")}>← এডিট করুন</button>
-            <button className="btn-primary" onClick={() => setTimeout(() => window.print(), 100)}>🖨️ প্রিন্ট / PDF</button>
+            <button className="btn-primary" onClick={async () => {
+              const { default: jsPDF } = await import('jspdf');
+              const { default: html2canvas } = await import('html2canvas');
+              const el = document.getElementById('printable');
+              const canvas = await html2canvas(el, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                width: el.scrollWidth,
+                height: el.scrollHeight,
+              });
+              const imgData = canvas.toDataURL('image/png');
+              const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+              const pdfW = pdf.internal.pageSize.getWidth();
+              const pdfH = (canvas.height * pdfW) / canvas.width;
+              pdf.addImage(imgData, 'PNG', 0, 0, pdfW, pdfH);
+              pdf.save('nibondhon-report.pdf');
+            }}>📥 PDF ডাউনলোড</button>
             <button className="btn-success" onClick={() => generateDocx({ UNIONS, currentRows, smarak, dateInfo, masYear, letterBody, toBangla, sumField })}>
               📄 Word (.docx) ডাউনলোড
             </button>
