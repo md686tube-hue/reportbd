@@ -358,7 +358,10 @@ export default function App() {
         <div className="preview-view">
           <div className="preview-actions">
             <button className="btn-secondary" onClick={() => setView("entry")}>← এডিট করুন</button>
-            <button className="btn-primary" onClick={() => window.print()}>🖨️ প্রিন্ট / PDF</button>
+            <button className="btn-primary" onClick={async () => {
+              await document.fonts.load('1em Nikosh');
+              setTimeout(() => window.print(), 500);
+            }}>🖨️ প্রিন্ট / PDF</button>
             <button className="btn-success" onClick={() => generateDocx({ UNIONS, currentRows, smarak, dateInfo, masYear, letterBody, toBangla, sumField })}>
               📄 Word (.docx) ডাউনলোড
             </button>
