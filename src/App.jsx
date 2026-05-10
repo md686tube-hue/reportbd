@@ -1,6 +1,28 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import { generateDocx } from "./docxGenerator";
+import { NIKOSH_B64 } from "./nikoshFont";
+
+// Nikosh font inject
+(function() {
+  const style = document.createElement('style');
+  style.textContent = `
+    @font-face {
+      font-family: 'Nikosh';
+      src: url('data:font/truetype;base64,${NIKOSH_B64}') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: block;
+    }
+    .doc-preview, .doc-preview * {
+      font-family: 'Nikosh', sans-serif !important;
+    }
+    @media print {
+      * { font-family: 'Nikosh', sans-serif !important; }
+    }
+  `;
+  document.head.appendChild(style);
+})();
 
 // ======= Supabase =======
 const SUPABASE_URL = "https://bpkslzciqpbzmkktrymm.supabase.co";
