@@ -1,6 +1,21 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import { generateDocx } from "./docxGenerator";
+import { NIKOSH_B64 } from "./nikoshFont";
+
+// Nikosh font dynamically inject — CSS এ না রেখে JS এ রাখলে print এও কাজ করে
+(function() {
+  const style = document.createElement('style');
+  style.textContent = `@font-face {
+  font-family: 'Nikosh';
+  src: url('data:font/truetype;base64,${NIKOSH_B64}') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+* { font-family: 'Nikosh', 'Hind Siliguri', sans-serif !important; }`;
+  document.head.appendChild(style);
+})();
 
 // ======= Supabase =======
 const SUPABASE_URL = "https://bpkslzciqpbzmkktrymm.supabase.co";
@@ -75,8 +90,8 @@ const BN_BN_MONTHS = ["বৈশাখ","জ্যৈষ্ঠ","আষাঢ়
 
 function getMasYear(dateStr) {
   if (!dateStr) return "";
-  const d = new Date(dateStr);
-  return `${BN_MONTHS[d.getMonth()]}/${toBangla(d.getFullYear() % 100)}`;
+  const [year, month] = dateStr.split("-").map(Number);
+  return `${BN_MONTHS[month - 1]}/${toBangla(year % 100)}`;
 }
 
 const BN_MONTH_MAP = [
@@ -87,10 +102,8 @@ const BN_MONTH_MAP = [
 
 function toBanglaDate(dateStr) {
   if (!dateStr) return { bangla: "", english: "" };
-  const d = new Date(dateStr);
-  const month = d.getMonth() + 1;
-  const day = d.getDate();
-  const year = d.getFullYear();
+  // new Date() ব্যবহার করলে timezone shift হয়, তাই manually parse করি
+  const [year, month, day] = dateStr.split("-").map(Number);
   let bnMonth = 0, bnDay = 0, bnYear = 0;
   for (const [m, startDay, bMonth] of BN_MONTH_MAP) {
     if (month === m) {
@@ -103,7 +116,7 @@ function toBanglaDate(dateStr) {
   bnYear = month >= 4 ? year - 593 : year - 594;
   return {
     bangla: `${toBangla(bnDay)} ${BN_BN_MONTHS[bnMonth]}, ${toBangla(bnYear)}`,
-    english: `${toBangla(day)} ${BN_MONTHS[d.getMonth()]}, ${toBangla(year)}`,
+    english: `${toBangla(day)} ${BN_MONTHS[month - 1]}, ${toBangla(year)}`,
   };
 }
 
