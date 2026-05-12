@@ -386,7 +386,7 @@ body {
 
 /* Signature layout matching screenshot */
 .sig-section {
-  margin-top: 14px;
+  margin-top: 50px;
   font-size: 12px;
   line-height: 1.8;
 }
@@ -400,7 +400,7 @@ body {
 
 .sig-right-block { text-align: center; }
 .sig-name-spacer { height: 16px; }
-.sig-right-block .sig-name { font-weight: 700; }
+.sig-right-block .sig-name { font-weight: 550; }
 
 /* নিচের অংশ: বামে জেলা/দুঃআঃ */
 .sig-bottom-row {
