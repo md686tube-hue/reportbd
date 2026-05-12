@@ -185,7 +185,7 @@ export async function generateDocx({ UNIONS, currentRows, smarak, dateInfo, masY
           para("জীবননগর, চুয়াডাঙ্গা।", { center: true, size: SZ, spacing: { before: 0, after: 0 } }),
           para("☎ ০২৪৭৭৭৮৯৭০১", { center: true, size: SZ, spacing: { before: 0, after: 0 } }),
           para("unojibannagar@mopa.gov.bd", { center: true, size: SZ, spacing: { before: 0, after: 0 } }),
-        ]},
+        ]}),
       ]}),
       // Bottom row: বামে জেলা প্রশাসক
       new TableRow({ children: [
