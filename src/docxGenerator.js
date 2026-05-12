@@ -193,7 +193,7 @@ export async function generateDocx({ UNIONS, currentRows, smarak, dateInfo, masY
           para("জেলা প্রশাসক", { size: SZ, spacing: { before: 0, after: 0 } }),
           para("চুয়াডাঙ্গা।", { size: SZ, spacing: { before: 0, after: 0 } }),
           para("দুঃআঃ উপ-পরিচালক, স্থানীয় সরকার, চুয়াডাঙ্গা।", { size: SZ, spacing: { before: 0, after: 0 } }),
-        ]},
+        ]}),
         new TableCell({ borders: NO_BORDERS, children: [para("")] }),
       ]}),
     ],
